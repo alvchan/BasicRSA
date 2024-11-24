@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public final class Rng {
 	private static final int N = 624;
 	private static final int M = 397;
@@ -5,15 +7,18 @@ public final class Rng {
 	private static final int UPPER_MASK = 0x80000000;
 	private static final int LOWER_MASK = 0x7fffffff;
 	private static final int[] MAG = {0x0, XOR_TEMPER};
+
+	private Rng() {}
 		
 	private static final class MersenneTwister {
 		private int[] state;
 		private int idx;
 
 		private MersenneTwister() {
-			long seed = System.currentTimeMillis();
+			Random rand = new Random(System.currentTimeMillis());
+			int seed = rand.nextInt();
 			state = new int[N];
-			state[0] = (int) seed & 0xffffffff;
+			state[0] = seed & 0xffffffff;
 			for (this.idx = 1; idx < N; idx++)
 				state[idx] = (69069 * state[idx-1]) & 0xffffffff;
 		}

@@ -1,30 +1,33 @@
+import java.math.BigInteger;
+
 public final class Prime {
-	public static boolean isPrime(int x) {
-		int m = x - 1;
+	private Prime() {}
+
+	public static boolean isPrime(BigInteger x) {
+		BigInteger m = x.subtract(BigInteger.ONE);
 		for (int k = 1; k < 10; k++) {
-			if ((x - 1) % (1 << k) == 0)
-				m = (x - 1) >> k;
+			if ((x.subtract(BigInteger.ONE)).mod(BigInteger.ONE.shiftLeft(k)).equals(BigInteger.ZERO))
+				m = x.subtract(BigInteger.ONE).shiftRight(k);
 			else
 				break;
 		}
 
-		int a = 2;
+		final BigInteger a = BigInteger.TWO;
+		BigInteger a_m = BigInteger.ONE;
+		for (BigInteger i = BigInteger.ZERO; i.compareTo(m) == -1; i = i.add(BigInteger.ONE))
+			a_m = a_m.multiply(a.multiply(m));
 
-		long a_m = 1;
-		for (int i = 0; i < m; i++)
-			a_m *= a;
-
-		long b = a_m % x;
-		if (b == 1 || b == x-1)
+		BigInteger b = a_m.mod(x);
+		if (b.equals(BigInteger.ONE) || b.equals(x.subtract(BigInteger.ONE)))
 			return true;
 
 		for (int i = 0; i < 10; i++) {
-			if (b == 1)
+			if (b.equals(BigInteger.ONE))
 				return false;
-			else if (b == x-1)
+			else if (b.equals(x.subtract(BigInteger.ONE)))
 				return true;
 
-			b = (b*b) % x;
+			b = b.modPow(BigInteger.TWO, x);
 		}
 
 		return false;
