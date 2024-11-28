@@ -21,6 +21,7 @@ public final class Prime {
 		if (b.equals(BigInteger.ONE) || b.equals(x.subtract(BigInteger.ONE)))
 			return true;
 
+		// TODO: up the rounds
 		for (int i = 0; i < 10; i++) {
 			if (b.equals(BigInteger.ONE))
 				return false;
