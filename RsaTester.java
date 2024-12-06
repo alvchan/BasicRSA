@@ -1,5 +1,8 @@
 import java.math.BigInteger;
 
+/**
+ * Dummy class to verify algorithm works as intended.
+ */
 public final class RsaTester {
 	public static boolean areAssertionsEnabled() {
 		boolean assertEnabled = false;
@@ -13,6 +16,13 @@ public final class RsaTester {
 		return assertEnabled;
 	}
 
+	/**
+	 * Seed a new RSA object and verifies encryption was successful.
+	 *
+	 * @param testCount # of random seeds to try
+	 * @param keySize length of key to generate
+	 * @param m sample message to test encryption/decryption
+	 */
 	public static void randTest(int testCount, int keySize, String m) {
 		System.out.printf("[rand test %d]\n", testCount);
 		Rsa rsa = new Rsa(keySize);

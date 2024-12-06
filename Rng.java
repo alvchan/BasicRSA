@@ -1,5 +1,8 @@
 import java.util.Random;
 
+/**
+ * A wrapper class for generating a random integer.
+ */
 public final class Rng {
 	private static final int N = 624;
 	private static final int M = 397;
@@ -8,12 +11,19 @@ public final class Rng {
 	private static final int LOWER_MASK = 0x7fffffff;
 	private static final int[] MAG = {0x0, XOR_TEMPER};
 
+	// don't let anyone initialize - it's a static wrapper class
 	private Rng() {}
 		
+	/**
+	 * A pseudorandom number generator.
+	 */
 	private static final class MersenneTwister {
 		private int[] state;
 		private int idx;
 
+		/**
+		 * Seeds this PRNG object.
+		 */
 		private MersenneTwister() {
 			Random rand = new Random(System.currentTimeMillis());
 			int seed = rand.nextInt();
@@ -23,6 +33,11 @@ public final class Rng {
 				state[idx] = (69069 * state[idx-1]) & 0xffffffff;
 		}
 
+		/**
+		 * Create a new random 32-bit integer.
+		 *
+		 * @return random i32
+		 */
 		private int rand() {
 			int y, i;
 			if (idx >= N || idx < 0) {
@@ -50,6 +65,11 @@ public final class Rng {
 		}
 	}
 
+	/**
+	 * Create a new random 32-bit integer.
+	 *
+	 * @return random i32
+	 */
 	public static int rand() {
 		MersenneTwister mt = new MersenneTwister();
 		return mt.rand();
